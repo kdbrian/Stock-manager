@@ -1,4 +1,4 @@
-name: Android CI
+name: build android app
 
 on:
   push:
@@ -24,6 +24,5 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Build with Gradle linting
-      run: ./gradlew updateLintBaseline
+
 
