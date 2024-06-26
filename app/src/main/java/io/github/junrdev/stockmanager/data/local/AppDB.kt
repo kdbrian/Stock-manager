@@ -5,6 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
 import io.github.junrdev.stockmanager.model.Converters
 import io.github.junrdev.stockmanager.model.Product
 
@@ -20,11 +21,15 @@ abstract class AppDB : RoomDatabase() {
 
         fun getAppDb(context: Context): AppDB {
             return INSTANCE ?: synchronized(this) {
-                val db = Room.databaseBuilder(context, AppDB::class.java, "stockmanagementdb")
-                    .build()
-                INSTANCE = db
-                db
+                buildDatabase(context).also { INSTANCE = it }
             }
         }
+
+        fun buildDatabase(context: Context): AppDB =
+            Room.databaseBuilder(context, AppDB::class.java, "stockmanagementdb")
+//                .addMigrations(
+//                    Migration(2, 1) {}
+//                )
+                .build()
     }
 }
